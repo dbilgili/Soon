@@ -1,0 +1,71 @@
+@import '../../styles/variables'
+
+.remindersList
+  font-size: 15px
+  height: 78px
+  line-height: 13px
+  margin-left: 16px
+  margin-right: auto
+  margin-top: 25px
+  overflow-y: scroll
+  position: relative
+  width: calc(100% - 32px)
+
+  &::after
+    content: ''
+    height: 5px
+    left: 0
+    position: sticky
+    top: 0
+    width: 100%
+
+  &::-webkit-scrollbar
+    display: none
+
+  &.noReminder
+    color: rgba($black, 0.7)
+    font-size: 17px
+    height: 100%
+    line-height: 120px
+    margin-left: 0
+    text-align: center
+    width: 100%
+
+  .reminder
+    align-items: center
+    display: flex
+    margin-bottom: 7px
+
+    span
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+
+    &.expired
+      text-decoration: line-through
+
+      span
+        opacity: 0.3
+
+    svg
+      border: 1px solid $brand-red
+      border-radius: 50%
+      height: 17px
+      margin-right: 5px
+      padding: 2px
+      width: 17px
+
+  &.darkMode
+    &.noReminder
+      color: rgba($white, 0.5)
+
+    .reminder
+      span
+        color: $white
+
+      &.expired
+        color: $white
+
+        span
+          color: $white
+          opacity: 0.5

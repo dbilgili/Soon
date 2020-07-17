@@ -1,0 +1,56 @@
+@import '../../styles/variables'
+
+.addReminder
+  align-items: center
+  display: flex
+  flex-direction: column
+  position: relative
+  transform: translateY(-5px)
+  width: 100%
+
+  .statusMessage
+    bottom: -20px
+    color: $green-text
+    font-size: 12px
+    font-weight: 400
+    left: 50%
+    opacity: 0
+    position: absolute
+    transform: translateY(10px) translateX(-50%)
+
+    &.enter
+      opacity: 1
+      transform: translateY(5px) translateX(-50%)
+      transition: 0.2s linear
+      transition-property: opacity, transform
+
+    &.fail
+      color: $brand-red
+
+  input
+    color: $black
+    width: 80%
+
+    &::placeholder
+      color: rgba($black, 0.5)
+
+    &:first-of-type
+      margin-bottom: 4px
+
+    &:last-of-type
+      margin-top: 4px
+
+  .separator
+    background-color: $light-gray
+    height: 1px
+    width: 80%
+
+  &.darkMode
+    input
+      color: $white
+
+      &::placeholder
+        color: rgba($white, 0.5)
+
+    .separator
+      background-color: rgba($light-gray, 0.2)
