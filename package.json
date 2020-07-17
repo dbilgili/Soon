@@ -17,7 +17,6 @@
     "@tippyjs/react": "^4.1.0",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
-    "elastic-scroll-polyfill": "^2.1.0",
     "electron-store": "^5.2.0",
     "electron-util": "^0.12.2",
     "prop-types": "^15.7.2",
