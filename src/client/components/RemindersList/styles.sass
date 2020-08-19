@@ -1,4 +1,5 @@
 @import '../../styles/variables'
+@import '../../styles/animations'
 
 .remindersList
   font-size: 15px
@@ -36,36 +37,74 @@
     display: flex
     margin-bottom: 7px
 
-    span
+    .message
+      color: $black
       overflow: hidden
       text-overflow: ellipsis
       white-space: nowrap
 
+      .repeatWhen
+        color: $black
+        font-size: inherit
+        height: 16px
+        text-align: left
+
+        &.shake
+          animation: shake .5s linear
+
     &.expired
       text-decoration: line-through
 
-      span
-        opacity: 0.3
+      .message
+        color: rgba($black, 0.4)
+
+        span
+          color: $black
+          opacity: 0.4
 
     svg
       border: 1px solid $brand-red
       border-radius: 50%
+      fill: $brand-red
       height: 17px
       margin-right: 5px
       padding: 2px
       width: 17px
+
+    .refresh
+      svg
+        border-color: $green-text
+        fill: $green-text
 
   &.darkMode
     &.noReminder
       color: rgba($white, 0.5)
 
     .reminder
-      span
+      svg
+        border: 1px solid $bright-brand-red
+        fill: $bright-brand-red
+
+      .refresh
+        svg
+          border-color: $bright-green-text
+          fill: $bright-green-text
+
+      .message
         color: $white
+
+        .repeatWhen
+          color: $white
+
+        span
+          color: $white
 
       &.expired
         color: $white
 
-        span
-          color: $white
-          opacity: 0.5
+        .message
+          color: rgba($white, 0.4)
+
+          span
+            color: $white
+            opacity: 0.5
