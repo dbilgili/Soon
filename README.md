@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://github.com/dbilgili/Soon/blob/files/images/logo.svg?sanitize=true" height="70" width="70">
   <h3 align="center">Soon</h3>
-  <p align="center"><a href="https://github.com/dbilgili/Soon/releases/download/1.0.0/Soon-1.0.0.dmg.zip">Download the latest version</a><p>
+  <p align="center"><a href="https://github.com/dbilgili/Soon/releases/download/1.0.1/Soon-1.0.1.dmg.zip">Download the latest version</a><p>
 </p>
 
 Alternatively, you can clone the repository and build the app on your own by running `npm run build` and `npm run dist` commands consecutively.
@@ -23,10 +23,13 @@ Below the list of valid duration input identifiers.
 'hr', 'hr.', 'hrs', 'hrs.', 'hour', 'hours'
 ```
 
+All these duration identifiers can start with `every` keyword to set a periodic reminder.
+
 Some input examples for duration (Only integers are valid as a number).
 
 ```
 1 hr
 20min.
 30seconds
+Every 10 min
 ```
