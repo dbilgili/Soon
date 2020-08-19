@@ -1,4 +1,5 @@
 @import '../../styles/variables'
+@import '../../styles/animations'
 
 .addReminder
   align-items: center
@@ -24,9 +25,6 @@
       transition: 0.2s linear
       transition-property: opacity, transform
 
-    &.fail
-      color: $brand-red
-
   input
     color: $black
     width: 80%
@@ -39,6 +37,10 @@
 
     &:last-of-type
       margin-top: 4px
+
+  .timeInput
+    &.shake
+      animation: shake .5s linear
 
   .separator
     background-color: $light-gray
@@ -54,3 +56,6 @@
 
     .separator
       background-color: rgba($light-gray, 0.2)
+
+    .statusMessage
+      color: $bright-green-text

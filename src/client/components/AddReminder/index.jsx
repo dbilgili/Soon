@@ -13,12 +13,13 @@ class AddReminder extends React.Component {
       message: '',
       time: '',
       statusMessage: '',
-      isFailMessage: false
+      shake: false
     };
 
     this.messageInputRef = React.createRef();
     this.timeInputRef = React.createRef();
-    this.timeout = null;
+    this.statusMessageTimeout = null;
+    this.shakeTimeout = null;
   }
 
   componentDidMount() {
@@ -29,7 +30,8 @@ class AddReminder extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.statusMessageTimeout);
+    clearTimeout(this.shakeTimeout);
     ipcRenderer.removeListener('NOTIFICATION_ADDED', this.notificationAdded);
     ipcRenderer.removeListener('NOTIFICATION_FAILED', this.notificationFailed);
     ipcRenderer.removeListener('WINDOW_VISIBLE', this.onWindowVisible);
@@ -44,7 +46,6 @@ class AddReminder extends React.Component {
     this.timeInputRef.current.value = '';
 
     this.setState({
-      isFailMessage: false,
       statusMessage: 'Reminder added',
       message: '',
       time: ''
@@ -55,20 +56,29 @@ class AddReminder extends React.Component {
   }
 
   notificationFailed = () => {
-    this.setState({
-      isFailMessage: true,
-      statusMessage: 'Reminder couldn\'t be added'
-    });
-
-    this.clearMessage();
+    if (!this.shakeTimeout) {
+      this.setState({
+        shake: true,
+      }, this.clearShake());
+    }
   }
 
   clearMessage = () => {
-    this.timeout = setTimeout(() => {
+    this.statusMessageTimeout = setTimeout(() => {
       this.setState({
         statusMessage: ''
       });
+      this.statusMessageTimeout = null;
     }, 2500);
+  }
+
+  clearShake = () => {
+    this.shakeTimeout = setTimeout(() => {
+      this.setState({
+        shake: false,
+      });
+      this.shakeTimeout = null;
+    }, 500);
   }
 
   handleInputChange = (e) => {
@@ -97,7 +107,7 @@ class AddReminder extends React.Component {
   }
 
   render() {
-    const { statusMessage, isFailMessage } = this.state;
+    const { statusMessage, shake } = this.state;
     const { darkMode } = this.props;
 
     return (
@@ -117,6 +127,10 @@ class AddReminder extends React.Component {
         <div className={styles.separator} />
         <input
           ref={this.timeInputRef}
+          className={classnames(
+            styles.timeInput,
+            shake ? styles.shake : ''
+          )}
           name="time"
           onChange={this.handleInputChange}
           onKeyUp={this.addNotification}
@@ -126,7 +140,6 @@ class AddReminder extends React.Component {
           className={classnames(
             styles.statusMessage,
             statusMessage.length ? styles.enter : '',
-            isFailMessage ? styles.fail : ''
           )}
         >
           {statusMessage}
