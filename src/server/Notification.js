@@ -42,10 +42,21 @@ class NotificationHandler {
       }
 
       this.notifications.forEach((notification, index) => {
-        const { message, timeStamp, isExpired } = notification;
+        const {
+          message,
+          timeStamp,
+          isExpired,
+          isCycle,
+          duration,
+        } = notification;
 
         if (timeStamp <= Date.now() && !isExpired) {
-          this.notifications[index].isExpired = true;
+          if (!isCycle) {
+            this.notifications[index].isExpired = true;
+          } else {
+            this.notifications[index].timeStamp = Date.now() + duration;
+          }
+
           this.store.set('notifications', this.notifications);
 
           const options = {
@@ -100,12 +111,42 @@ class NotificationHandler {
       return false;
     });
 
+    const isCycle = timeString.toLowerCase().includes('every');
+
     return {
       isValid,
+      isCycle,
+      duration,
       timeStamp: Date.now() + duration
     };
   }
 
+  repeat = (data) => {
+    const { id, time } = data;
+    const {
+      isValid,
+      isCycle,
+      duration,
+    } = this.resolveTimeStamp(time);
+
+    const index = this.notifications.length - id - 1;
+
+    if (isValid) {
+      this.notifications[index].isExpired = false;
+      this.notifications[index].isCycle = isCycle;
+      this.notifications[index].duration = duration;
+      this.notifications[index].timeStamp = Date.now() + duration;
+
+      this.store.set('notifications', this.notifications);
+
+      if (this.shouldWatch()) {
+        this.startWatching();
+        this.mainWindow.webContents.send('NOTIFICATION_ADDED', this.notifications);
+      }
+    } else {
+      this.mainWindow.webContents.send('REPEAT_FAILED');
+    }
+  }
 
   delete = (id) => {
     if (id === 'all') {
@@ -122,13 +163,20 @@ class NotificationHandler {
 
   add = (data) => {
     const { message, time } = data;
-    const { isValid, timeStamp } = this.resolveTimeStamp(time);
+    const {
+      isValid,
+      isCycle,
+      duration,
+      timeStamp
+    } = this.resolveTimeStamp(time);
 
     if (isValid && message.length) {
       this.notifications.push(
         {
           message,
           timeStamp,
+          isCycle,
+          duration,
           isExpired: false,
         }
       );
