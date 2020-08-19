@@ -17,6 +17,7 @@ const Notification = require('./Notification');
 const gotTheLock = app.requestSingleInstanceLock();
 
 const store = new Store();
+// store.clear();
 
 const initStore = () => {
   if (!store.get('notifications')) {
@@ -121,6 +122,13 @@ if (!gotTheLock) {
 
     ipcMain.on('ADD_REMINDER', (event, data) => {
       notification.add(data);
+      if (shouldWatch()) {
+        notification.startWatching();
+      }
+    });
+
+    ipcMain.on('REPEAT_REMINDER', (evet, data) => {
+      notification.repeat(data);
       if (shouldWatch()) {
         notification.startWatching();
       }
