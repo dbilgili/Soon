@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://github.com/dbilgili/Soon/blob/files/images/logo.svg?sanitize=true" height="70" width="70">
   <h3 align="center">Soon</h3>
-  <p align="center"><a href="https://github.com/dbilgili/Soon/releases/download/1.0.1/Soon-1.0.1.dmg.zip">Download the latest version</a><p>
+  <p align="center"><a href="https://github.com/dbilgili/Soon/releases/download/1.0.2/Soon-1.0.2.dmg.zip">Download the latest version</a><p>
 </p>
 
 Alternatively, you can clone the repository and build the app on your own by running `npm run build` and `npm run dist` commands consecutively.
