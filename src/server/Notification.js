@@ -90,15 +90,15 @@ class NotificationHandler {
 
     const checkList = [
       {
-        identifiers: ['sec', 'sec.', 'secs', 'secs.', 'second', 'seconds'],
+        identifiers: ['s', 's.', 'sec', 'sec.', 'secs', 'secs.', 'second', 'seconds'],
         multiplier: 1000,
       },
       {
-        identifiers: ['min', 'min.', 'mins', 'mins.', 'minute', 'minutes'],
+        identifiers: ['m', 'm.', 'min', 'min.', 'mins', 'mins.', 'minute', 'minutes'],
         multiplier: 60 * 1000
       },
       {
-        identifiers: ['hr', 'hr.', 'hrs', 'hrs.', 'hour', 'hours'],
+        identifiers: ['h', 'h.', 'hr', 'hr.', 'hrs', 'hrs.', 'hour', 'hours'],
         multiplier: 60 * 60 * 1000
       }
     ];
